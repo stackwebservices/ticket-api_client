@@ -7,12 +7,22 @@
  */
 
 class sws_ticket_api_client {
+    protected $email;
+    protected $secret;
+    protected $organisation_id;
+    
+    public function __construct($email, $secret, $organisation_id) {
+        $this->email = $email;
+        $this->secret = $secret;
+        $this->organisation_id = $organisation_id;
+    }
+    
     private function request($fields) {
         $query = http_build_query($fields);
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'http://ticket.stackwebservices.com/api.php');
-        curl_setopt($curl, CURLOPT_USERAGENT, 'SWS Ticket Client 1.0');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'SWS Ticket Client 1.1');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
@@ -22,12 +32,12 @@ class sws_ticket_api_client {
         return $out;
     }
 
-    public function ticket_add($api_email, $api_secret, $api_organisation_id, $email, $title, $content) {
+    public function ticket_add($email, $title, $content) {
         $request = array();
         $request['method'] = "ticket_add";
-        $request['email'] = $api_email;
-        $request['secret'] = $api_secret;
-        $request['organisation_id'] = $api_organisation_id;
+        $request['email'] = $this->email;
+        $request['secret'] = $this->secret;
+        $request['organisation_id'] = $this->organisation_id;
 
         $request['client_email'] = $email;
         $request['title'] = $title;
@@ -37,12 +47,12 @@ class sws_ticket_api_client {
         return json_decode($json_result);
     }
 
-    public function ticket_details_check($api_email, $api_secret, $api_organisation_id, $email, $ticket_id) {
+    public function ticket_details_check($email, $ticket_id) {
         $request = array();
         $request['method'] = "ticket_details_check";
-        $request['email'] = $api_email;
-        $request['secret'] = $api_secret;
-        $request['organisation_id'] = $api_organisation_id;
+        $request['email'] = $this->email;
+        $request['secret'] = $this->secret;
+        $request['organisation_id'] = $this->organisation_id;
 
         $request['ticket_id'] = $ticket_id;
         $request['client_email'] = $email;
@@ -50,12 +60,12 @@ class sws_ticket_api_client {
         return json_decode($json_result);
     }
 
-    public function comment_add($api_email, $api_secret, $api_organisation_id, $email, $ticket_id, $content) {
+    public function comment_add($email, $ticket_id, $content) {
         $request = array();
         $request['method'] = "comment_add";
-        $request['email'] = $api_email;
-        $request['secret'] = $api_secret;
-        $request['organisation_id'] = $api_organisation_id;
+        $request['email'] = $this->email;
+        $request['secret'] = $this->secret;
+        $request['organisation_id'] = $this->organisation_id;
 
         $request['ticket_id'] = $ticket_id;
         $request['client_email'] = $email;
