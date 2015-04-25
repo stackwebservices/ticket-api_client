@@ -24,7 +24,7 @@ $email = 'client@email.com';
 $title = 'bug 1';
 $message = 'my imac has just crashed and when Iturn it on again all that';
 
-$new_ticket = $api_ticket->ticket_add($api['email'], $api['secret'], $api['organisation_id'], $email, $title, $message);
+$new_ticket = $ticket->ticket_add($api['email'], $api['secret'], $api['organisation_id'], $email, $title, $message);
 ```
 
 **Check ticket status**
@@ -33,7 +33,7 @@ $new_ticket = $api_ticket->ticket_add($api['email'], $api['secret'], $api['organ
 $email = 'client@email.com';
 $ticket_id = 1;
 
-$status = $api_ticket->ticket_details_check($api['email'], $api['secret'], $api['organisation_id'], $email, $ticket_id);
+$status = $ticket->ticket_details_check($api['email'], $api['secret'], $api['organisation_id'], $email, $ticket_id);
 ```
 
 **Add comment**
@@ -43,5 +43,5 @@ $email = 'client@email.com';
 $ticket_id = 1;
 $comment = 'client comment';
 
-$cc = $api_ticket->comment_add($api['email'], $api['secret'], $api['organisation_id'], $email, $ticket_id, $comment);
+$cc = $ticket->comment_add($api['email'], $api['secret'], $api['organisation_id'], $email, $ticket_id, $comment);
 ```
